@@ -4,7 +4,6 @@ const synth = window.speechSynthesis;//SpeechSynth API
 
 //letiables declarations
 let file, 
-    book,
     textToRead,
     timer, 
     endValue, 
@@ -18,9 +17,6 @@ const bookRender = document.querySelector("#book-render"),
     defList = document.querySelector(".defList"),
     zoomBtn1 = document.querySelector("#zoomOutBtn"),
     zoomBtn2 = document.querySelector("#zoomInBtn"),
-    bookDragDrop = document.querySelector(".drag-area"),//
-    bookUploadBtn = document.querySelector(".book-upload"),// button to search and select file
-    bookInput = document.querySelector(".bookInput"),
     openAudio = document.querySelector(".btn-opendAudio"),//open the tts player 
     playTts = document.querySelector(".btn-play-pause"),//play button
     backTts = document.querySelector(".btn-back"),//backward button
@@ -54,7 +50,12 @@ const bookRender = document.querySelector("#book-render"),
     noteTknBtns = document.querySelector(".noteTknBtn"),
     listNoteBtns = document.querySelector(".listNoteBtn"),
     deleteNoteBtn = document.querySelector(".delete-btn"),
-    openNoteBtn = document.querySelector(".open-btn");
+    openNoteBtn = document.querySelector(".open-btn"),
+    lineSpacingBtn = document.querySelector(".lineSpacingBtn"),
+    spacingContent = document.querySelector(".spacing-content"),
+    textP = document.getElementsByTagName("p"),
+    darkLightBtn = document.querySelector(".darkLightBtn"),
+    darkLightImg = document.querySelector(".darkLightImg");
 
 let noteListItems;
 let onOff = false,
@@ -63,7 +64,13 @@ let onOff = false,
     noteIsOpen = false,
     notTransparent = true,
     searchIsOpen = false,
-    noteListOn = false;
+    noteListOn = false,
+    spacingIsOn = false,
+    lightModeIsOn = false;
+
+
+
+displayBook();
 
 //opens the tts player
 openAudio.onclick = () => {
@@ -116,99 +123,46 @@ function overTTSSettings() {
     ttsSettings.style.display = "flex";
 }
 
-bookUploadBtn.onclick = () => {
-    bookInput.click(); //input will be clicked when user click on button
-}
-bookInput.addEventListener("change", chooseBook);
-
-function chooseBook(){
-    file = this.files[0];
-    displayBook();
-    bookDragDrop.classList.add("active");
-}
-
-    //when user drags file over upload area
-bookDragDrop.addEventListener("dragover", (event)=>{
-    event.preventDefault(); // file will not open in a new tab
-    bookDragDrop.classList.add("active");
-});
- 
-//when file is dragged out of the area
-bookDragDrop.addEventListener("dragleave", ()=>{
-    bookDragDrop.classList.remove("active");
-});
-
-//when file is droped in the area
-bookDragDrop.addEventListener("drop", (event)=>{
-    event.preventDefault(); // file will not open in a new tab
-    //assign  file drop to the global letiable
-    file = event.dataTransfer.files[0];//[0] is for incase the user selects and drop multiple we will take the one at index 0
-    displayBook();
-});
-
 
 
     
 function displayBook() {
-    //so far we will only accept html text files
-    let fileType = file.type;
-    let validExtension = "text/html"
-    //validates file type
-    if (fileType === validExtension){
-        let fileReader = new FileReader(); //creating new file object
-        fileReader.onload = () =>{
-            let fileURL = fileReader.result; //passing the file
-
-            bookDragDrop.style.display = "none";
-            bookDragDrop.style.transform = "scale(0)";
-
-            //fetch the file and pass the data to the book letiable
-            fetch(fileURL)
-            .then(response => response.text())
-            .then(data => {
-                book = data
-
-                //deleting the html, and head of the file to keep body's content
-                //sometimes the style is inside the body so the slice should start at </style>
-                if(book.indexOf("<body>") < book.indexOf("</style>")){
-                    book = book.slice(book.indexOf("</style>"), book.indexOf("</html>"));
-                }
-                
-                let styles = book.slice(book.indexOf("<style"), book.indexOf("</style"));
-                styles = styles.slice(styles.indexOf("body"));
-
-                console.log(book.indexOf(" ***</div>"))
-                if(book.indexOf(" ***</div>") != -1){
-
-                    book = book.slice(book.indexOf(" ***</div>"), book.indexOf("</html>"));
-                    book = book.replace(" ***</div>", "<div class ='book-text'>"); 
-                    book = book.replace(/<\/body>/g,"</div>"); 
-
-                }else{
-                    
-                    book = book.slice(book.indexOf("<body>"), book.indexOf("</html>"));
-                    //replacing body tags with div 
-                    book = book.replace(/<body>/g, "<div class ='book-text'>");  
-                    book = book.replace(/<\/body>/g,"</div>"); 
-                }
-                
-                //add book content to the bookrender div
-                bookRender.innerHTML = book;
-                bookRender.addEventListener("mouseup", selectedTextAreaMouseUp);
-                document.addEventListener("mousedown", pageMouseDown);
-
-                let styleSheet = document.createElement("style")
-                styleSheet.innerText = styles
-                document.head.appendChild(styleSheet);
-            });
-        }
-        fileReader.readAsDataURL(file);
-    }else{
-        alert("we only accept html files");
-        bookDragDrop.classList.remove("active");
+    let book = localStorage.getItem("bookData");
+    
+    //deleting the html, and head of the file to keep body's content
+    //sometimes the style is inside the body so the slice should start at </style>
+    if(book.indexOf("<body>") < book.indexOf("</style>")){
+        book = book.slice(book.indexOf("</style>"), book.indexOf("</html>"));
     }
     
-   
+    let styles = book.slice(book.indexOf("<style"), book.indexOf("</style"));
+    styles = styles.slice(styles.indexOf("body"));
+
+    console.log(book.indexOf(" ***</div>"))
+    if(book.indexOf(" ***</div>") != -1){
+
+        book = book.slice(book.indexOf(" ***</div>"), book.indexOf("</html>"));
+        book = book.replace(" ***</div>", "<div class ='book-text'>"); 
+        book = book.replace(/<\/body>/g,"</div>"); 
+
+    }else{
+        
+        book = book.slice(book.indexOf("<body>"), book.indexOf("</html>"));
+        //replacing body tags with div 
+        book = book.replace(/<body>/g, "<div class ='book-text'>");  
+        book = book.replace(/<\/body>/g,"</div>"); 
+    }
+    
+    
+    //add book content to the bookrender div
+    bookRender.innerHTML = book;
+    bookRender.addEventListener("mouseup", selectedTextAreaMouseUp);
+    document.addEventListener("mousedown", pageMouseDown);
+
+    let styleSheet = document.createElement("style")
+    styleSheet.innerText = styles
+    document.head.appendChild(styleSheet);
+           
     }
 
     
@@ -337,7 +291,7 @@ function pageMouseDown(event) {
 
     //if function to make sure click is not on def modal for it to go away
     if(getComputedStyle(defModal).display === "flex" && event.target.id!="defModal" && event.target.id!="defBtnImg"
-     && event.target.className!="definitions" && getComputedStyle(bookDragDrop).display === "none"){ 
+     && event.target.className!="definitions"){ 
         window.getSelection().empty();
         defModal.style.display = "none";
         defModal.style.transform = "scale(0)";
@@ -374,6 +328,10 @@ function zoomOutClicked() {
 function zoomInClicked() {
     const bookFontSize = Number(getComputedStyle(bookRender).fontSize.slice(0,-2));
     bookRender.style.fontSize = `${bookFontSize+1}px`;
+}
+
+lineSpacingBtn.onclick = () => {
+    bookRender.style.fontSize = `${bookFontSize-1}px`;
 }
 
 //getting tts voices
@@ -748,4 +706,54 @@ noteOpacity.onclick = () => {
     notTransparent?noteContainer.style.opacity = "1":noteContainer.style.opacity = "0.9";
     !notTransparent?noteOpacity.style.color = "#eee":noteOpacity.style.color = "#232931";
 };
+
+lineSpacingBtn.onclick = () => {
+    
+    spacingIsOn = true;
+
+    spacingIsOn?spacingContent.style.display = "flex":spacingContent.style.display = "none";
+
+    if(spacingIsOn){
+        let el;
+        document.querySelector(".spacingOne").addEventListener("click", () => {
+            for(el of textP){
+                el.style.lineHeight = "1.5";
+            };
+            spacingContent.style.display = "none";
+            
+        })
+
+        document.querySelector(".spacingTwo").addEventListener("click", () => {
+            for(el of textP){
+                el.style.lineHeight = "2.5";
+            }
+            spacingContent.style.display = "none";
+        })
+
+        document.querySelector(".spacingThree").addEventListener("click", () => {
+            for(el of textP){
+                el.style.lineHeight = "3";
+            }            
+            spacingContent.style.display = "none";
+        })
+    }
+};
+
+darkLightBtn.onclick = () => {
+    lightModeIsOn = !lightModeIsOn;
+
+    let styleLink = document.querySelector("#lnk");
+    
+    if(!lightModeIsOn){
+        styleLink.setAttribute("href", "./css/styleLight.css");
+        darkLightImg.classList.remove("fa-toggle-on");
+        darkLightImg.classList.add("fa-toggle-off");
+    }
+    if(lightModeIsOn){
+        styleLink.setAttribute("href", "./css/style.css"); 
+        darkLightImg.classList.remove("fa-toggle-off");
+        darkLightImg.classList.add("fa-toggle-on");
+    }
+}
+
 

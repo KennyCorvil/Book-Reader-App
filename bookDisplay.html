@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="./css/style.css" id = "lnk">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Gentium+Book+Basic:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,800;1,400&display=swap" rel="stylesheet">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap" rel="stylesheet">
+        <script src="https://kit.fontawesome.com/eaddd66988.js" crossorigin="anonymous"></script>
+    </head>
+    <body class="body" id = "bookDisp">
+        <div class="navbar">
+            <li class="nav1"><a class="getbook" id="a1" href="./index.html">HOME</a></li>
+            <div class="navBtn">
+                <div class="searchText">
+                    <input  class="smallSearch" id="searchInput" type="text" placeholder="Search..">
+                    <button class="searchBtn"   type="submit"><i class="fa fa-search"></i></button>
+                </div>
+                <button class="noteBtn">
+                    <i class="fa-solid fa-pen noteBtnIcon"></i>
+                </button>
+                <button class="zoomBtn zoomOutBtn" id="zoomOutBtn">
+                    <i class="fa-solid fa-magnifying-glass-minus"></i>
+                </button>
+                <button class="zoomBtn zoomInBtn" id="zoomInBtn">
+                    <i class="fa-solid fa-magnifying-glass-plus"></i>
+                </button>
+                <div class="LineSpaceDrop">
+                    <button class="lineSpacingBtn" id="lineSpacingBtn">
+                        <img src="./images/line-spacing.png" alt="">
+                    </button>
+                    <div class="spacing-content">
+                        <div class="spacing spacingOne">1.5</div>
+                        <div class="spacing spacingTwo">2.5</div>
+                        <div class="spacing spacingThree">3.0</div>
+                    </div>
+                  </div>
+                <button class="darkLightBtn">
+                    <i class="fa-solid fa-toggle-on darkLightImg"></i>
+                </button>
+            </div>
+        </div>
+        <div class="progress-container">
+            <div class="progress-bar" id="scrollBar"></div>
+        </div> 
+        <div class="defModal" id="defModal">
+            <h1 class="defTitle" id="defModal">Word</h1>
+            <button class="defBtn" id="defModal">
+                <i class="fa-solid fa-pen-to-square" id ="defBtnImg"></i>
+                Save Word
+            </button>
+            <h3 class="defSubTitle" id="defModal">Definition of word</h3>
+            <ul class="defList" id="defModal">
+            </ul>
+        </div>
+
+        <div class="tts-modal">
+            <div class="audioSliderContainer">
+                <label for="rate">Rate</label>
+                <input type="range" min="0.5" max="2" value="1" step="0.1" class="slider" id="rate">
+                <p>Value: <span class="rateValue">1</span></p>
+
+                <label for="pitch">Pitch</label>
+                <input type="range" min="0" max="2" value="1" step="0.1" class="slider" id="pitch">
+                <p>Value: <span class="pitchValue">1</span></p>
+            </div>
+            <select class="voice-select"></select>
+            
+        </div>
+        <div class="tts-btn">
+            <button class="audio-settings"id="audioBtn"><i class="fa-solid fa-arrow-up-short-wide"></i></button>
+            <button class="btn-back" id="audioBtn"><i class="fa-solid fa-backward"></i></button>
+            <button class="btn-play-pause" id="audioBtn"><i class="fa-solid fa-play" id="playPause-fnt"></i></button>
+            <button class="btn-forward" id="audioBtn"><i class="fa-solid fa-forward"></i></button>
+            <button class="btn-closeTts" id="audioBtn"><i class="fa-solid fa-ear-listen"></i></button>
+        </div>
+        <div class="noteContainer">
+            <header class="noteHeader">
+                <button class="viewAllnotes">View all Notes</button>
+                <button class="newNoteBtn">Add New Note</button>
+                <button class="exitNote"><i class="fa-solid fa-circle"></i></button>
+                <button class="noteOpacity"><i class="fa-solid fa-eye"></i></button>
+            </header>
+            <input type="text" class="noteTitle" placeholder="Title...">
+            <textarea name="noteText" class="noteText" id="noteText" placeholder="Type your notes..."></textarea>
+            <div class="noteList">
+                <!-- <div class="noteListItems">
+                    <div class="noteTitle">Reading Notes</div>
+                    <div class="noteSample">In this book the author...</div>
+                    <div class="noteDate">Sunday 2:35pm</div>
+                </div> -->
+            </div>
+            <div class="note-btn">
+                <div class="noteTknBtn">
+                    <button class="noteBtn clear-btn">Clear</button>
+                    <button class="noteBtn cancel-btn">Cancel</button>
+                    <button class="noteBtn save-btn">Save</button>
+                </div>
+                <div class="listNoteBtn">
+                    <button class="noteBtn delete-btn">Delete</button>
+                    <button class="noteBtn open-btn">Open</button>
+                </div>
+            </div>
+        </div>
+        <button class="btn-opendAudio" ><i class="fa-solid fa-ear-listen"></i></button>
+        <div id="book-render" class="book-render"></div>
+        
+        <script type="module" src="./js/main.js" async defer></script>
+        <!-- <script type="module" src="./js/searchBook.js" async defer></script> -->
+        <script src="./dist/mark.js" defer></script>
+    </body>
+</html>

@@ -22,8 +22,8 @@ a:hover {color:#EEEEEE !important;
 
 .body {
     margin:0 !important;
-    background-color: #232931 !important;
-    color: #EEEEEE !important;
+    background-color: #eee !important;
+    color: #000 !important;
    }
 mark {
   background-color: #4ECCA3;
@@ -37,7 +37,7 @@ mark {
     margin: 0;
     padding: 0;
     overflow: hidden;
-    background-color: #181D31;
+    background-color: #eee;
     height: 80px;
     width: 100%;
     z-index: 1000;
@@ -110,7 +110,7 @@ mark {
     
 .nav1 {
 flex-wrap: wrap;
-color: #eee;
+color: #181D31 !important;
 text-align: center;
 padding: 14px 16px;
 text-decoration: none;
@@ -119,7 +119,7 @@ padding-top: 80px;;
 }
 
 #a1:hover {
-    color: #EEEEEE;
+    color: #181D31 !important;
     font-weight: bold;
 }
 
@@ -144,6 +144,7 @@ padding-top: 80px;;
      
 }
 .book-text p {
+  font-weight: 800;
     line-height: 1.5;     
 }
 
@@ -228,7 +229,7 @@ text-align: left;
     margin-right: 20px;
     font-size: 20px;
     font-weight: 500;
-    color: #eee;
+    color: #181D31;
 }
 .zoomOutBtn{
   position: fixed;
@@ -256,7 +257,7 @@ text-align: left;
   margin-top: -5px;
   font-size: 15px;
   font-weight: 500;
-  color: #eee;
+  color: #181D31;
 }
 .noteBtnIcon:hover {
     color: #19456B;
@@ -276,7 +277,7 @@ text-align: left;
   margin-top: -10px;
   font-size: 25px;
   font-weight: 500;
-  color: #eee;
+  color: #181D31;
 }
 
 .LineSpaceDrop {
@@ -294,13 +295,11 @@ text-align: left;
   padding: 1% 1%;
   color: inherit;
   margin-right: 20px;
-  color: #eee;
+  color: #181D31;
   margin-top: 3px;
 }
 .lineSpacingBtn img {
   width: 20px;
-  -webkit-filter: invert(100%);
-  filter: invert(100%);
 }
 
 .spacing-content {
@@ -308,7 +307,7 @@ text-align: left;
   flex-direction: column;
   align-items: center;
   margin-top: 35px;
-  background-color: #181D31;
+  background-color: #eee;
   width: 40px;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   border-radius: 4px;
@@ -330,7 +329,7 @@ text-align: left;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    border: 2px dashed #eee;
+    border: 2px dashed #181D31;
     height: 50%;
     width: 50%;
     max-width: 700px;
@@ -342,13 +341,13 @@ text-align: left;
     transform: translate(-50%, -50%);
 }
 .drag-area.active {
-    border: 2px solid #eee;
+    border: 2px solid #181D31;
 }
 
 .drag-area header {
     font-size: 125%;
     font-weight: 500;
-    color: #eee;
+    color: #181D31;
     margin-left: 10px;
     margin-right: 10px;
     font-family: "Poppins" sans-serif !important;
@@ -356,12 +355,12 @@ text-align: left;
 .drag-area .icon {
     font-size: 100px;
     font-weight: 500;
-    color: #eee;
+    color: #181D31;
 }
 .drag-area span {
     font-size: 25px;
     font-weight: 500;
-    color: #eee;
+    color: #181D31;
     margin: 10px 0 15px 0;
     font-family: "Poppins" sans-serif !important;
 }
@@ -372,7 +371,7 @@ text-align: left;
     border: none;
     outline: none;
     background: #eee;
-    color: #232931;
+    color: #181D31;
     border-radius: 5px;
     cursor: pointer;
     font-family: "Poppins" sans-serif !important;
@@ -388,7 +387,7 @@ text-align: left;
     height: 80px;
     bottom: -20px;
     transform: translate(-50%, -50%);
-    background-color: #eee;
+    background-color: #181D31;
     border-radius: 100px;
 }
 .btn-opendAudio {
@@ -401,8 +400,8 @@ text-align: left;
     height: 80px;
     bottom: -20px;
     transform: translate(-50%, -50%);
-    background-color: #eee;
-    color: #181D31;
+    background-color: #181D31;
+    color: #eee;
     border: none;
     border-radius: 100px;
     cursor: pointer;
@@ -414,8 +413,8 @@ text-align: left;
     position: fixed;
     width: 90px;
     height: 90px;
-    background-color: #181D31;
-    color: #eee;
+    background-color: #eee;
+    color: #181D31;
 }
 
 .tts-modal {
@@ -526,11 +525,11 @@ text-align: left;
     width: 525px;
     height: 500px;
     padding: 0 0.1%;
-    background-color: #eee;
     position: fixed;
     border-radius: 10px;
     transform: translate(-50%, -50%);
     z-index: 100;
+    background-color: rgb(210, 208, 208);
     opacity: 1;
   }
   .noteHeader {
@@ -753,7 +752,7 @@ text-align: left;
     flex-direction: row;
     margin-left: -100%;
     margin-right: 20px;
-    border: 2px solid #eee;
+    border: 2px solid #181D31;
     border-radius: 5px;
   }
   .smallSearch{
@@ -765,7 +764,7 @@ text-align: left;
     overflow: auto;
     outline: none;
     padding: 0 10px;
-    color: #eee;
+    color: #000;
     -webkit-box-shadow: none;
     -moz-box-shadow: none;
     box-shadow: none;
@@ -779,7 +778,7 @@ text-align: left;
     overflow: auto;
     outline: none;
     padding: 0 10px;
-    color: #eee;
+    color: #000;
     -webkit-box-shadow: none;
     -moz-box-shadow: none;
     box-shadow: none;
@@ -787,7 +786,7 @@ text-align: left;
   }
   .searchBtn{
     font-size: large;
-    color: #eee;
+    color: #181D31;
     border: none;
     background-color: transparent;
   }
@@ -799,31 +798,27 @@ text-align: left;
 }
 
 .bookList {
-  display: none;
+  display: flex;
   position: absolute;
   flex-wrap: wrap;
-  height: fit-content;
-  width: 85%;
   gap: 5%;
   justify-content: center;
   margin-right: 8%;
   margin-left: 8%;
-  margin-top: 100px;
-  margin-bottom: 100px;
+  margin-top: 10px;
+  margin-bottom: 10px;
   background-color: #E6DDC4;
   border-radius: 8px;
   padding-top: 10%;
+  overflow: auto;
 }
-.bookListItems img {
-  height: 200px;
-  margin-right: 5px;
-  max-width: 134px;
-}
-.bookDescr {
+
+.bookListItems {
+  position: inherit;
   width: 20%;
-  height: 180px;
-  width: 200px;
-  font-size: 12px;         
+  height: 100%;
+  font-size: 12px;
+  flex: 0 0 auto;         
   display: flex;          
   flex-direction: column; 
   position: relative;
@@ -831,31 +826,9 @@ text-align: left;
   background-color: #19456B;
   padding: 10px 10px;
 }
-.bookListItems {
-  display: flex;
-  flex-direction: row;
-}
 .bookListItems div {
   margin-bottom: 20px;
 }
-.bookDescr:hover{
+.bookListItems:hover{
   background-color: #4ECCA3;
-}
-
-.subjectsCont {
-  display: flex;
-  font-size: x-small;
-  flex-direction: row;
-  flex-wrap: wrap;
-  overflow: auto;
-
-}
-.subjectsCont span {
-  background-color: #356b9b;
-  max-height: 25px;
-  width: fit-content;
-  padding: 5px 5px;
-  margin-right: 10px;
-  margin-top: 5px;
-  border-radius: 10px;
 }

@@ -177,8 +177,7 @@ function displayBook() {
 function displayBook2() {
     localStorage.removeItem("bookData");
     //fetch the file and pass the data to the book letiable
-    // fetch("https://cors-anywhere.herokuapp.com/"+file)
-    fetch(file)
+    fetch("https://cors-anywhere.herokuapp.com/"+file)
     .then(response => response.text())
     .then(data => {
         localStorage.setItem("bookData", data);

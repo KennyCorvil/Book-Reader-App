@@ -30,7 +30,9 @@ const bookRender = document.querySelector("#book-render"),
     pitch = document.querySelector("#pitch"),//pitch slide
     pitchValue = document.querySelector(".pitchValue"),//pitch value span
     voiceSelect = document.querySelector(".voice-select"),//voice select
-    playPauseFont = document.querySelector("#playPause-fnt"),
+    playAudioBtn = document.querySelector(".btn-play"),
+    stopAudioBtn = document.querySelector(".btn-stop"),
+    pauseAudioBtn = document.querySelector(".btn-pause"),
     noteContainer = document.querySelector(".noteContainer"),//notepad modal container
     noteHeader = document.querySelector(".noteHeader"),//notepad head div
     noteTextarea = document.querySelector("#noteText"),//notepad texarea
@@ -66,10 +68,10 @@ let onOff = false,
     searchIsOpen = false,
     noteListOn = false,
     spacingIsOn = false,
-    lightModeIsOn = false;
+    lightModeIsOn = true;
 
 
-
+console.log(localStorage.getItem("bookId"))
 displayBook();
 
 //opens the tts player
@@ -81,7 +83,7 @@ openAudio.onclick = () => {
 //opens the tts player menu
 openTtsSettings.onclick = () => {
     settingOn = !settingOn;
-    console.log(onOff)
+    
     settingOn && onOff?ttsSettings.style.display = "flex":ttsSettings.style.display = "none";
     if(settingOn){
         ttsSettings.addEventListener("onmouseover", overTTSSettings());
@@ -98,6 +100,10 @@ if(onOff){
     onOff = false;
     playOrPause = false;
     settingOn = !settingOn;
+
+    pauseAudioBtn.style.display = "none";
+    playAudioBtn.style.display = "flex";
+    audioIsPlaying = false;
     }
 }
 // function fade() {
@@ -128,6 +134,7 @@ function overTTSSettings() {
     
 function displayBook() {
     let book = localStorage.getItem("bookData");
+    //localStorage.removeItem("bookData");
     
     //deleting the html, and head of the file to keep body's content
     //sometimes the style is inside the body so the slice should start at </style>
@@ -138,7 +145,6 @@ function displayBook() {
     let styles = book.slice(book.indexOf("<style"), book.indexOf("</style"));
     styles = styles.slice(styles.indexOf("body"));
 
-    console.log(book.indexOf(" ***</div>"))
     if(book.indexOf(" ***</div>") != -1){
 
         book = book.slice(book.indexOf(" ***</div>"), book.indexOf("</html>"));
@@ -152,8 +158,10 @@ function displayBook() {
         book = book.replace(/<body>/g, "<div class ='book-text'>");  
         book = book.replace(/<\/body>/g,"</div>"); 
     }
+    let baseIgmUrl =`https://www.gutenberg.org/cache/epub/${localStorage.getItem("bookId")}`;
     
-    
+    let imageSrc = book.slice(book.indexOf("src"), book.indexOf("/"));
+    //book = book.replace(imageSrc, baseIgmUrl);
     //add book content to the bookrender div
     bookRender.innerHTML = book;
     bookRender.addEventListener("mouseup", selectedTextAreaMouseUp);
@@ -162,8 +170,15 @@ function displayBook() {
     let styleSheet = document.createElement("style")
     styleSheet.innerText = styles
     document.head.appendChild(styleSheet);
-           
-    }
+
+    let bookImg = bookRender.querySelectorAll("img");
+    bookImg.forEach(el => {
+        let oldSrc = el.src.slice(el.src.indexOf("/images"));
+        el.removeAttribute('src');
+        el.src = baseIgmUrl+oldSrc;
+    })
+
+}
 
     
 //word count
@@ -196,8 +211,7 @@ function selectedTextAreaMouseUp(event) {
             if(textSliced !== textToRead){
                 synth.cancel();
                 textToRead = textSliced;
-                console.clear()
-                console.log(textToRead);
+                //console.clear()
             }
             // function count(){
             //     clearTimeout(timer);
@@ -305,13 +319,15 @@ function pageMouseDown(event) {
     }
 }
 
+let scrolled;
 // scroll navbar tracker 
 window.onscroll = () => {scrollNav()};
 
 function scrollNav() {
   let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
   let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-  let scrolled = (winScroll / height) * 100;
+  scrolled = (winScroll / height) * 100;
+  //console.log(scrolled)
   document.getElementById("scrollBar").style.width = scrolled + "%";
 }
 
@@ -362,20 +378,33 @@ if(synth.onvoiceschanged !== undefined){
 //speak
 const speak = () => {
         playOrPause = true;
-        playPauseIcon();
 //check if speaking
     if(synth.speaking){
         console.error("already speaking...");
         return;
     }
-    if(textToRead !== "" && WordCount(textToRead) > 3){
-        const speakText = new SpeechSynthesisUtterance(textToRead);
-        console.log(synth.speaking)
+    if(textToRead !== "" ){
+        let startReading = textToRead.split('. ');;
+        let speakText;
+        startReading.forEach(text => {
+            speakText = new SpeechSynthesisUtterance(text);
+            console.log(startReading)
+        })
+        //textToRead = textToRead.slice(textToRead.indexOf(".")+1);
+
+        //
+        // if(textToRead === ""){
+        //     startReading = textToRead.slice(0,textToRead.indexOf(".")+1);
+        //     speakText = new SpeechSynthesisUtterance(startReading);
+        //     console.log(startReading)
+        // }
+
+        
         //speak end
         speakText.onend = e => {
+            startReading = "";
             playOrPause = false;
-            playPauseIcon();
-            console.log("done speaking...");
+            
         }
     
 
@@ -405,33 +434,33 @@ const speak = () => {
 }
 let hasTextToRead = false;
 //switch between play and pause
-const playPauseIcon = () => {
-    if(hasTextToRead){
-        playPauseFont.classList.remove("fa-play");
-        playPauseFont.classList.add("fa-circle-play");
-        }
-    if(!hasTextToRead){
-        playPauseFont.classList.remove("fa-circle-play");
-        playPauseFont.classList.remove("fa-circle-pause");
-        playPauseFont.classList.add("fa-play");
-        }
-    if(playOrPause){
-        playPauseFont.classList.remove("fa-circle-play");
-        playPauseFont.classList.add("fa-circle-pause");
-    }else{
-        playPauseFont.classList.remove("fa-circle-pause");
-        playPauseFont.classList.add("fa-circle-play");
-    }
-   
-}
 
-const playOrResume = () => {
-    if(!playOrPause){
+
+let audioIsPlaying = false;
+
+playAudioBtn.onclick = () => {
+    if(!audioIsPlaying){
+        audioIsPlaying  = true;
+        speak();
+        playAudioBtn.style.display = "none";
+        pauseAudioBtn.style.display = "flex";
+}
+    //console.log(textToRead)
+    if(audioIsPlaying && !playOrPause){
         synth.resume();
         playOrPause = true;
-    }else{
-        speak();
-        playOrPause = true;
+        playAudioBtn.style.display = "none";
+        pauseAudioBtn.style.display = "flex";
+    }
+}
+
+
+pauseAudioBtn.onclick = () => {
+    if(audioIsPlaying && playOrPause){
+        synth.pause();
+        playOrPause = false;
+        pauseAudioBtn.style.display = "none";
+        playAudioBtn.style.display = "flex";
     }
 }
 
@@ -478,9 +507,6 @@ searchTextBtn.onclick = () => {
         "ignoreJoiners": false,
         "ignorePunctuation": [],
         "wildcards": "disabled",
-        "each": function(node){
-            // node is the marked DOM element
-        },
         "filter": function(textNode, foundTerm, totalCounter, counter){
             // textNode is the text node which contains the found term
             // foundTerm is the found search term
@@ -502,13 +528,7 @@ searchTextBtn.onclick = () => {
     instance.mark(textToSearch, options); // will mark the keyword textToSearch value
 }
 
-//Events
-//play button clicked
-playTts.onclick = () => {
-    playOrPause = !playOrPause;
-    playOrPause?playOrResume():synth.pause();
-    console.log(textToRead);
-};
+
 
 //rate change
 rate.addEventListener("change", e => rateValue.textContent = rate.value);
@@ -559,8 +579,6 @@ viewAllnotes.onclick = () => {
         noteClicked();
     }
     
-        console.log( noteTknBtns)
-        console.log(listNoteBtns)
 }
 newNoteBtn.onclick = () => {
     noteListOn = false;
@@ -600,7 +618,6 @@ function noteClicked(event) {
             item.style.backgroundColor = "#eee";
         }
     })
-    console.log(noteClickedId)
 } 
 
 deleteNoteBtn.onclick = () => {
@@ -689,7 +706,6 @@ saveNoteBtn.onclick = () => {
         title: `${noteTitleValue}`,
         body: `${notebodyValue}`
     });
-    console.log(NotesAPI.getAllNotes())
 };
 exitNote.onclick = () => {
     noteIsOpen = false;
@@ -753,6 +769,7 @@ darkLightBtn.onclick = () => {
         styleLink.setAttribute("href", "./css/style.css"); 
         darkLightImg.classList.remove("fa-toggle-off");
         darkLightImg.classList.add("fa-toggle-on");
+        noteContainer.style.backgroundColor = "rgb(210, 208, 208)";
     }
 }
 

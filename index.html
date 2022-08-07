@@ -25,7 +25,7 @@
     </div>
     <div class="searchBook">
         <button class="searchBookBtn" type="submit"><i class="fa fa-search"></i></button>
-        <input type="text" class="searchBookInput" placeholder="Search for a book...">
+        <input type="text" class="searchBookInput" placeholder="Search for a book..." >
     </div>
     <div class="drag-area">
         <div class="icon"><i class="fa-solid fa-file-arrow-up"></i></div>
@@ -36,7 +36,11 @@
     </div>
     <div class="bookList">
         <!-- will contain all the book found by the api -->
+        <div class="lds-grid">
+            <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
+        </div>
     </div>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script type="module" src="./js/searchBook.js" async defer></script>
     <!-- <script type="module" src="./js/main.js" async defer></script> -->
 </body>

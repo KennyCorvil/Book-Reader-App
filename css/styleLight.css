@@ -30,17 +30,17 @@ mark {
   border-radius: 2px;
 }
 .navbar {
-    display: flex;
-    align-items: center;
-    position: fixed;
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    background-color: #eee;
-    height: 80px;
-    width: 100%;
-    z-index: 1000;
+    display: flex !important;
+    align-items: center !important;
+    position: fixed !important;
+    list-style-type: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    background-color: #eee !important;
+    height: 80px !important;
+    width: 100% !important;
+    z-index: 1000 !important;
     }
 
 .searchBook {
@@ -108,7 +108,7 @@ mark {
 }
     
     
-.nav1 {
+.getbook {
 flex-wrap: wrap;
 color: #181D31 !important;
 text-align: center;
@@ -243,7 +243,7 @@ text-align: left;
 }
 
 .noteBtn{
-  position: fixed;
+  position: relative;
   background-repeat: no-repeat;
   background-color: transparent;
   background-position: 50% 50%;
@@ -466,7 +466,9 @@ text-align: left;
     font-size: 300%;
 }
 
-
+.btn-play{ display: flex;}
+.btn-pause{ display: none;}
+.btn-stop{ display: none;}
 
 .audioSliderContainer {
     width: 80%;
@@ -537,7 +539,7 @@ text-align: left;
     flex-direction: row;
     justify-content: right;
     width: 90.5%;
-    background-color: rgb(210, 208, 208);
+    background-color: rgb(164, 163, 163);
     border-bottom: 1px solid #181D31;
     border-radius: 8px 8px 0 0 ;
     margin-bottom: 5px;

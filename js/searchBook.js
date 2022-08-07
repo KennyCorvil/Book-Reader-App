@@ -11,7 +11,8 @@ const bookDragDrop = document.querySelector(".drag-area"),//
       bookSearchBar = document.querySelector(".searchBook"),
       searchBookInput = document.querySelector(".searchBookInput"),
       searchBookBtn = document.querySelector(".searchBookBtn"),
-      bookList = document.querySelector(".bookList");
+      bookList = document.querySelector(".bookList"),
+      loadingGrid = document.querySelector(".lds-grid");
 
 let searchIsOpen = false;
 
@@ -25,6 +26,7 @@ openSearchBar.onclick = () => {
         bookList.style.display = "none";
     }
     if(searchIsOpen){
+        searchBookInput.autofocus = "true";
         bookSearchBar.style.display = "flex"; 
         bookDragDrop.style.display = "none";
         bookList.style.display = "flex";
@@ -33,17 +35,19 @@ openSearchBar.onclick = () => {
 
 searchBookBtn.onclick = () => {
     searchForBook();
+
 }
 
 const searchForBook = () => {
     let bookToSearch = searchBookInput.value;
-    console.log("sneed")
-    console.log(bookToSearch)
-    console.log(searchBookInput.value)
+
     if(bookToSearch !== ""){
         
         //will clear out the book list to append the newly searched and found ones
         document.querySelectorAll(".bookListItems").forEach(el => el.remove());
+        
+        loadingGrid.style.display = "inline-block";
+        
 
         fetch(baseUrl+bookToSearch)
         .then(response => response.json())
@@ -63,8 +67,14 @@ const searchForBook = () => {
             subjectsCont.setAttribute("id", ` ${item.id}subjectsCont`);
             
             //console.log(item.formats["text/html"])
-            bookData[item.id] = item.formats["text/html"];
-
+            
+            //some times the book link is different
+            if(item.formats["text/html"].indexOf("https://www.gutenberg.org/ebooks") > -1 ){//this basically determine if this base path exist
+                bookData[item.id] = `https://www.gutenberg.org/cache/epub/${item.id}/pg${item.id}-images.html`;
+                //console.log(bookLink)
+            }else{
+                bookData[item.id] = item.formats["text/html"];
+            }
             aBook.setAttribute("class", "bookListItems");
             bookDescr.setAttribute("class", "bookDescr");
             bookAuthor.setAttribute("class", "bookAuth");
@@ -74,8 +84,13 @@ const searchForBook = () => {
             bookDescr.addEventListener("click", bookClicked);
             bookImage.addEventListener("click", bookClicked);
             aBook.addEventListener("click", bookClicked);
+            bookAuthor.addEventListener("click", bookClicked2);
+            bookTitle.addEventListener("click", bookClicked2);
+            subjectsCont.addEventListener("click", bookClicked2);
             
-            bookImage.src = item.formats["image/jpeg"];
+            bookImage.src = item.formats["image/jpeg"].replace("small.jpg", "medium.jpg");//making sure the highest quality image is rendered
+            
+
 
             item.authors.map(res => {
                 bookAuthor.innerText = res.name
@@ -98,6 +113,9 @@ const searchForBook = () => {
             bookDescr.appendChild(subjectsCont);
             aBook.appendChild(bookDescr);
             bookList.appendChild(aBook);
+            if(aBook !== null ){
+                loadingGrid.style.display = "none";
+            }
             
         })
         )
@@ -145,7 +163,7 @@ bookDragDrop.addEventListener("drop", (event)=>{
 
 function displayBook() {
     //delete the previous file 
-    localStorage.removeItem("bookData");
+    //localStorage.removeItem("bookData");
     //so far we will only accept html text files
     let fileType = file.type;
     let validExtension = "text/html"
@@ -175,22 +193,45 @@ function displayBook() {
    
 }
 function displayBook2() {
-    localStorage.removeItem("bookData");
+    //console.log(file);
     //fetch the file and pass the data to the book letiable
-    fetch("https://cors-anywhere.herokuapp.com/"+file)
+    fetch("https://corsproxy-reader.herokuapp.com/"+file)//add something to clear the bookData Object 
     .then(response => response.text())
     .then(data => {
+        //console.log(data)
         localStorage.setItem("bookData", data);
+        localStorage.setItem("bookId", bookId);
         window.open("./bookDisplay.html","_self");
+        
     });
 }
 
 
 function bookClicked(event) {
-    bookId = String(event.target.id)
+    bookId = String(event.target.id);
     file = bookData[bookId];
     displayBook2();
     
 }
+function bookClicked2(event) {
+    bookId = parseInt(event.target.id);
+    bookId = String(bookId);
+    console.log(bookId)
+    file = bookData[bookId];
+    displayBook2();
+    
+}
+
+//when Enter key is pressed from the keyboard
+searchBookInput.addEventListener("keypress", function(event) {
+    
+    
+    if (event.key === "Enter") {
+      // Cancel the default action, if needed
+      event.preventDefault();
+      // Trigger the button element with a click
+      searchBookBtn.click();
+    }
+  });
 
 

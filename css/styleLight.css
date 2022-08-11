@@ -37,7 +37,7 @@ mark {
     margin: 0 !important;
     padding: 0 !important;
     overflow: hidden !important;
-    background-color: #eee !important;
+    background-color: rgb(211, 210, 210) !important;
     height: 80px !important;
     width: 100% !important;
     z-index: 1000 !important;
@@ -213,37 +213,16 @@ text-align: left;
    text-align: inherit;
 }
 .navBtn {
-    display:flex;
-    margin-left: 80%;
-    position: fixed;
+  display:flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-left: 80%;
+  position: fixed;
+  padding: 0 0;
 }
 .zoomBtn {
-    background-repeat: no-repeat;
-    background-color: transparent;
-    background-position: 50% 50%;
-    border: none;
-    border-radius: 5px;
-    vertical-align: middle;
-    padding: 1% 1%;
-    color: inherit;
-    margin-right: 20px;
-    font-size: 20px;
-    font-weight: 500;
-    color: #181D31;
-}
-.zoomOutBtn{
-  position: fixed;
-  margin-left: 20px;
-  margin-top: -5px;
-}
-.zoomInBtn{
-  position: fixed;
-  margin-left: 45px;
-  margin-top: -5px;
-}
-
-.noteBtn{
-  position: relative;
   background-repeat: no-repeat;
   background-color: transparent;
   background-position: 50% 50%;
@@ -252,9 +231,30 @@ text-align: left;
   vertical-align: middle;
   padding: 1% 1%;
   color: inherit;
-  margin-right: 40px;
+  font-size: 20px;
+  font-weight: 500;
+  color: #181D31;
+}
+.zoomOutBtn{
+  position: fixed;
+  margin-left: 20px;
+}
+.zoomInBtn{
+  position: fixed;
+  margin-left: 45px;
+}
+
+.noteBtn{
+  position: fixed;
+  background-repeat: no-repeat;
+  background-color: transparent;
+  background-position: 50% 50%;
+  border: none;
+  border-radius: 5px;
+  vertical-align: middle;
+  padding: 1% 1%;
+  color: inherit;
   margin-left: -10px;
-  margin-top: -5px;
   font-size: 15px;
   font-weight: 500;
   color: #181D31;
@@ -274,7 +274,6 @@ text-align: left;
   padding: 1% 1%;
   color: inherit;
   margin-left: 130px;
-  margin-top: -10px;
   font-size: 25px;
   font-weight: 500;
   color: #181D31;
@@ -294,9 +293,8 @@ text-align: left;
   vertical-align: middle;
   padding: 1% 1%;
   color: inherit;
-  margin-right: 20px;
+  margin-left: 10px;
   color: #181D31;
-  margin-top: 3px;
 }
 .lineSpacingBtn img {
   width: 20px;
@@ -323,59 +321,6 @@ text-align: left;
   background-color: #19456B;
 }
 
-.drag-area {
-    position: fixed;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    border: 2px dashed #181D31;
-    height: 50%;
-    width: 50%;
-    max-width: 700px;
-    border-radius: 8px;
-    margin-top: 400px;
-    margin-left: 20%;
-    margin-left: 50%;
-    transform: scale(1);
-    transform: translate(-50%, -50%);
-}
-.drag-area.active {
-    border: 2px solid #181D31;
-}
-
-.drag-area header {
-    font-size: 125%;
-    font-weight: 500;
-    color: #181D31;
-    margin-left: 10px;
-    margin-right: 10px;
-    font-family: "Poppins" sans-serif !important;
-}
-.drag-area .icon {
-    font-size: 100px;
-    font-weight: 500;
-    color: #181D31;
-}
-.drag-area span {
-    font-size: 25px;
-    font-weight: 500;
-    color: #181D31;
-    margin: 10px 0 15px 0;
-    font-family: "Poppins" sans-serif !important;
-}
-.book-upload {
-    padding: 10px 25px;
-    font-size: 20px;
-    font-weight: 500;
-    border: none;
-    outline: none;
-    background: #eee;
-    color: #181D31;
-    border-radius: 5px;
-    cursor: pointer;
-    font-family: "Poppins" sans-serif !important;
-}
 
 .opendAudio {
     display: flex;
@@ -389,6 +334,7 @@ text-align: left;
     transform: translate(-50%, -50%);
     background-color: #181D31;
     border-radius: 100px;
+    
 }
 .btn-opendAudio {
     display: flex;
@@ -833,4 +779,40 @@ text-align: left;
 }
 .bookListItems:hover{
   background-color: #4ECCA3;
+}
+
+.table-dropdown {
+  
+}
+
+
+.table-dropdown .table-dropbtn {
+  font-size: 16px;  
+  border: none;
+  outline: none;
+  color: #eee;
+  padding: 14px 16px;
+  background-color: inherit;
+  font-family: inherit;
+  margin: 0;
+}
+
+
+.dropdown-table-content {
+  display: none;
+  position: fixed;
+  flex-wrap: wrap;
+  flex-direction: column;
+  font-size: small !important;
+  background-color: #181D31;
+  width: 200px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  margin-top: 20px;
+  padding: 10px 10px;
+  border-radius: 5px;
+  overflow: auto;
+}
+
+.dropdown-table-content div{
+  margin-top: 10px;
 }

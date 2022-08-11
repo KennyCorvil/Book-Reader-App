@@ -57,9 +57,11 @@ const bookRender = document.querySelector("#book-render"),
     spacingContent = document.querySelector(".spacing-content"),
     textP = document.getElementsByTagName("p"),
     darkLightBtn = document.querySelector(".darkLightBtn"),
-    darkLightImg = document.querySelector(".darkLightImg");
+    darkLightImg = document.querySelector(".darkLightImg"),
+    tableDropBtn = document.querySelector(".table-dropbtn"),
+    tableDropdown = document.querySelector(".table-dropdown");
 
-let noteListItems;
+let noteListItems, tableOfContent;
 let onOff = false,
     settingOn = false,
     playOrPause = false,
@@ -144,6 +146,17 @@ function displayBook() {
     
     let styles = book.slice(book.indexOf("<style"), book.indexOf("</style"));
     styles = styles.slice(styles.indexOf("body"));
+
+    //grab the table of content from the the book html file
+    let table = book.slice(book.indexOf("<tr"), book.indexOf("</table>"));
+    book = book.replace(table, "");//remove the table of content 
+
+    //create a table element that will be appended to the content dropdown btn
+    tableOfContent = document.createElement("div");
+    tableOfContent.setAttribute("class", "dropdown-table-content");
+    tableOfContent.innerHTML = table;
+    tableDropdown.appendChild(tableOfContent);
+
 
     if(book.indexOf(" ***</div>") != -1){
 
@@ -384,27 +397,43 @@ const speak = () => {
         return;
     }
     if(textToRead !== "" ){
-        let startReading = textToRead.split('. ');;
-        let speakText;
-        startReading.forEach(text => {
-            speakText = new SpeechSynthesisUtterance(text);
-            console.log(startReading)
-        })
-        //textToRead = textToRead.slice(textToRead.indexOf(".")+1);
+        let startReading = textToRead.slice(0, textToRead.indexOf(".")+1);
+        let speakText = new SpeechSynthesisUtterance(startReading);
 
+        // startReading.forEach(text => {
+        //     speakText = new SpeechSynthesisUtterance(text);
+        //     console.log(startReading)
+        // })
+        textToRead = textToRead.slice(textToRead.indexOf(".")+1);
+        speak()
+
+        console.log(startReading)
+
+        
         //
         // if(textToRead === ""){
         //     startReading = textToRead.slice(0,textToRead.indexOf(".")+1);
         //     speakText = new SpeechSynthesisUtterance(startReading);
         //     console.log(startReading)
         // }
+        // for(let i = 0; i < startReading.length; i++) {
+        //     playOrPause = true; 
+        //     // for each iteration console.log a word
+        //     // and make a pause after it
+        //     (function (i) {
+        //         setTimeout(function () {
+        //             speakText = new SpeechSynthesisUtterance(startReading[i]);
+        //             console.log(startReading[i]);
+        //         }, 1000 * i);
+        //     })(i);
+        // };
 
         
         //speak end
         speakText.onend = e => {
-            startReading = "";
-            playOrPause = false;
             
+            
+            playOrPause = false; 
         }
     
 
@@ -773,4 +802,10 @@ darkLightBtn.onclick = () => {
     }
 }
 
+let tableContentIsOn = false;
 
+tableDropBtn.onclick = () => {
+    console.log("sneed")
+    tableContentIsOn = !tableContentIsOn;
+    tableContentIsOn?tableOfContent.style.display = "flex":tableOfContent.style.display = "none"
+}

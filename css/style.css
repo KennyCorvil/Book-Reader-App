@@ -25,6 +25,12 @@ a:hover {color:#EEEEEE !important;
     background-color: #232931 !important;
     color: #EEEEEE !important;
    }
+
+#home {
+  background-image: url("patternBackgroundImage.jpg");
+  background-color: #cccccc;
+}
+   
 mark {
   background-color: #4ECCA3;
   border-radius: 2px;
@@ -213,8 +219,14 @@ text-align: left;
 }
 .navBtn {
     display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    align-items: center;
+    flex-wrap: wrap;
     margin-left: 80%;
     position: fixed;
+    padding: 0 0;
 }
 .zoomBtn {
     background-repeat: no-repeat;
@@ -225,7 +237,6 @@ text-align: left;
     vertical-align: middle;
     padding: 1% 1%;
     color: inherit;
-    margin-right: 20px;
     font-size: 20px;
     font-weight: 500;
     color: #eee;
@@ -233,16 +244,14 @@ text-align: left;
 .zoomOutBtn{
   position: fixed;
   margin-left: 20px;
-  margin-top: -5px;
 }
 .zoomInBtn{
   position: fixed;
   margin-left: 45px;
-  margin-top: -5px;
 }
 
 .noteBtn{
-  position: relative;
+  position: fixed;
   background-repeat: no-repeat;
   background-color: transparent;
   background-position: 50% 50%;
@@ -251,9 +260,7 @@ text-align: left;
   vertical-align: middle;
   padding: 1% 1%;
   color: inherit;
-  margin-right: 40px;
   margin-left: -10px;
-  margin-top: -5px;
   font-size: 15px;
   font-weight: 500;
   color: #eee;
@@ -273,7 +280,6 @@ text-align: left;
   padding: 1% 1%;
   color: inherit;
   margin-left: 130px;
-  margin-top: -10px;
   font-size: 25px;
   font-weight: 500;
   color: #eee;
@@ -293,9 +299,8 @@ text-align: left;
   vertical-align: middle;
   padding: 1% 1%;
   color: inherit;
-  margin-right: 20px;
+  margin-left: 10px;
   color: #eee;
-  margin-top: 3px;
 }
 .lineSpacingBtn img {
   width: 20px;
@@ -324,59 +329,7 @@ text-align: left;
   background-color: #19456B;
 }
 
-.drag-area {
-    position: fixed;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    border: 2px dashed #eee;
-    height: 50%;
-    width: 50%;
-    max-width: 700px;
-    border-radius: 8px;
-    margin-top: 400px;
-    margin-left: 20%;
-    margin-left: 50%;
-    transform: scale(1);
-    transform: translate(-50%, -50%);
-}
-.drag-area.active {
-    border: 2px solid #eee;
-}
 
-.drag-area header {
-    font-size: 125%;
-    font-weight: 500;
-    color: #eee;
-    margin-left: 10px;
-    margin-right: 10px;
-    font-family: "Poppins" sans-serif !important;
-}
-.drag-area .icon {
-    font-size: 100px;
-    font-weight: 500;
-    color: #eee;
-}
-.drag-area span {
-    font-size: 25px;
-    font-weight: 500;
-    color: #eee;
-    margin: 10px 0 15px 0;
-    font-family: "Poppins" sans-serif !important;
-}
-.book-upload {
-    padding: 10px 25px;
-    font-size: 20px;
-    font-weight: 500;
-    border: none;
-    outline: none;
-    background: #eee;
-    color: #232931;
-    border-radius: 5px;
-    cursor: pointer;
-    font-family: "Poppins" sans-serif !important;
-}
 
 .opendAudio {
     display: flex;
@@ -800,135 +753,39 @@ text-align: left;
     font-weight: bold; 
 }
 
-.bookList {
+
+.table-dropdown {
+  
+}
+
+
+.table-dropdown .table-dropbtn {
+  font-size: 16px;  
+  border: none;
+  outline: none;
+  color: #eee;
+  padding: 14px 16px;
+  background-color: inherit;
+  font-family: inherit;
+  margin: 0;
+}
+
+
+.dropdown-table-content {
   display: none;
-  position: absolute;
+  position: fixed;
   flex-wrap: wrap;
-  height: fit-content;
-  width: 85%;
-  gap: 5%;
-  justify-content: center;
-  margin-right: 8%;
-  margin-left: 8%;
-  margin-top: 100px;
-  margin-bottom: 100px;
-  background-color: #E6DDC4;
-  border-radius: 8px;
-  padding-top: 10%;
-}
-.bookListItems img {
-  height: 200px;
-  margin-right: 5px;
-  max-width: 134px;
-  border-radius: 5px;
-}
-.bookDescr {
-  width: 20%;
-  height: 180px;
+  flex-direction: column;
+  font-size: small !important;
+  background-color: #181D31;
   width: 200px;
-  font-size: 12px;         
-  display: flex;          
-  flex-direction: column; 
-  position: relative;
-  border-radius: 8px;
-  background-color: #19456B;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  margin-top: 20px;
   padding: 10px 10px;
-}
-.bookListItems {
-  display: flex;
-  flex-direction: row;
-}
-.bookListItems div {
-  margin-bottom: 20px;
-}
-.bookDescr:hover{
-  background-color: #4ECCA3;
-}
-
-.subjectsCont {
-  display: flex;
-  font-size: x-small;
-  flex-direction: row;
-  flex-wrap: wrap;
+  border-radius: 5px;
   overflow: auto;
-
-}
-.subjectsCont span {
-  background-color: #356b9b;
-  max-height: 25px;
-  width: fit-content;
-  padding: 5px 5px;
-  margin-right: 10px;
-  margin-top: 5px;
-  border-radius: 10px;
 }
 
-/* while content are leading */
-.lds-grid {
-  display: inline-block;
-  position: relative;
-  width: 100px;
-  height: 200px;
+.dropdown-table-content div{
+  margin-top: 10px;
 }
-.lds-grid div {
-  position: absolute;
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  background: #fff;
-  animation: lds-grid 1.2s linear infinite;
-}
-.lds-grid div:nth-child(1) {
-  top: 8px;
-  left: 8px;
-  animation-delay: 0s;
-}
-.lds-grid div:nth-child(2) {
-  top: 8px;
-  left: 32px;
-  animation-delay: -0.4s;
-}
-.lds-grid div:nth-child(3) {
-  top: 8px;
-  left: 56px;
-  animation-delay: -0.8s;
-}
-.lds-grid div:nth-child(4) {
-  top: 32px;
-  left: 8px;
-  animation-delay: -0.4s;
-}
-.lds-grid div:nth-child(5) {
-  top: 32px;
-  left: 32px;
-  animation-delay: -0.8s;
-}
-.lds-grid div:nth-child(6) {
-  top: 32px;
-  left: 56px;
-  animation-delay: -1.2s;
-}
-.lds-grid div:nth-child(7) {
-  top: 56px;
-  left: 8px;
-  animation-delay: -0.8s;
-}
-.lds-grid div:nth-child(8) {
-  top: 56px;
-  left: 32px;
-  animation-delay: -1.2s;
-}
-.lds-grid div:nth-child(9) {
-  top: 56px;
-  left: 56px;
-  animation-delay: -1.6s;
-}
-@keyframes lds-grid {
-  0%, 100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.5;
-  }
-}
-/* -------------------------------- */

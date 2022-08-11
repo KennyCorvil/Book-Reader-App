@@ -5,7 +5,7 @@
     <title></title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/home.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Gentium+Book+Basic:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
@@ -18,21 +18,35 @@
     <script src="https://kit.fontawesome.com/eaddd66988.js" crossorigin="anonymous"></script>
 </head>
 <body class="body" id="home">
-    <div class="navbar">
-        <div class="navBtn">
-            <button class="searchBarOpen" type="submit"><i class="fa fa-search"></i></button>
+
+    <form action="" class="search-bar">
+        <i class="fa fa-search"></i>
+        <input type="search" name="search" pattern=".*\S.*" class="searchBookInput" placeholder="search book" autocomplete="off">
+        <button class="open-upload-btn" type="button">
+            <i class="fa-solid fa-file-arrow-up"></i>
+        </button>
+        <button class="search-btn" type="button">
+            <i class="fa fa-search"></i>
+        </button>
+    </form>
+    <div class="subjectContainer">
+        <button class="slideLeft slideBtn"><i class="fa-regular fa-square-caret-left"></i></button>
+        <div class="randomSubjects">
+            <!-- subjects will be appended here -->
         </div>
+        <button class="slideRight slideBtn"><i class="fa-regular fa-square-caret-right"></i></button>
+        <button class="refreshSubjects slideBtn"><i class="fa-solid fa-arrow-rotate-right"></i></button>
     </div>
-    <div class="searchBook">
-        <button class="searchBookBtn" type="submit"><i class="fa fa-search"></i></button>
-        <input type="text" class="searchBookInput" placeholder="Search for a book..." >
-    </div>
-    <div class="drag-area">
-        <div class="icon"><i class="fa-solid fa-file-arrow-up"></i></div>
-        <header>Drag & Drop to Upload Book(HTML files only)</header>
-        <span>OR</span>
-        <button class="book-upload">Browse File</button>
-        <input type="file" class="bookInput" hidden>
+    <!-- <div class="triangle-up uploadModal"></div> -->
+    <div class="drag-container uploadModal">
+        <i class="fa-solid fa-xmark closeUpload"></i>
+        <div class="drag-area">
+            <div class="icon"><i class="fa-solid fa-file-arrow-up"></i></div>
+            <header>Drag & Drop to Upload Book(HTML files only)</header>
+            <span>OR</span>
+            <button class="book-upload">Browse File</button>
+            <input type="file" class="bookInput" hidden>
+        </div>
     </div>
     <div class="bookList">
         <!-- will contain all the book found by the api -->

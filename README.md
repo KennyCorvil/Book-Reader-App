@@ -3,7 +3,9 @@ In this project I use HTML CSS and JavaScript to create a  book reading web appl
 
 With the this app a user can read books that are in Html format (you can find public domain book on https://www.gutenberg.org/ or convert your own pdf or epub files )
 
-This app provides the ability to search definitions of words by highlighting the word.
+If the book is in the public domain you can search for it
+
+You can search definitions of words by highlighting the word.
 I used a free dictionary api https://dictionaryapi.dev/
 
 This app provides the ability to turn the book into audio(TTS)
